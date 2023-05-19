@@ -35,4 +35,4 @@ The 35 leetcode problems we collected for benchmarking ALGO is listed in `leetco
 
 ## Results for LeetCode Problems
 
-The results for CodeContests are in `leetcode_results/`. For each problem there is a `{problem_id}_response.json`, where the reference oracle is listed in the `code_bruteforce` field, the data generators are listed in the `data_validator`, `data_generator`, `data_random_generator`, `data_tricky_generator` fields.
+The verifiers for LeetCode problems are in `leetcode_results/`. For each problem there is a `{problem_id}_response.json`, where the reference oracle is listed in the `code_bruteforce` field, the data generators are listed in the `data_validator`, `data_generator`, `data_random_generator`, `data_tricky_generator` fields.
