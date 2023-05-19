@@ -1,0 +1,97 @@
+{
+  "problem": 2644,
+  "link_id": "find-the-maximum-divisibility-score",
+  "contest": "weekly-contest-341",
+  "level": "easy",
+  "tags": [
+    "Math"
+  ],
+  "hint1": "",
+  "hint2": "For every divisor, use bruteforce to compute its divisibility score.",
+  "func_name": "maxDivScore",
+  "sample_inputs": [
+    "[4,7,9,3,9]\n[5,2,3]",
+    "[20,14,21,10]\n[5,7,5]",
+    "[12]\n[10,16]"
+  ],
+  "code_brute_force": {
+    "id": 2644,
+    "code": "class Solution:\n\n    def maxDivScore(self, nums: List[int], divisors: List[int]) -> int:\n        max_score = 0\n        min_divisor = 10 ** 9 + 1\n        for divisor in divisors:\n            divisibility_score = 0\n            for num in nums:\n                if num % divisor == 0:\n                    divisibility_score += 1\n            if divisibility_score > max_score:\n                max_score = divisibility_score\n                min_divisor = divisor\n            elif divisibility_score == max_score:\n                min_divisor = min(min_divisor, divisor)\n        return min_divisor\n",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "4465 ms",
+      "memory": 16596000,
+      "question_id": "2694",
+      "elapsed_time": 4490,
+      "compare_result": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1683071695921,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 155,
+      "total_testcases": 155,
+      "runtime_percentile": 39.55779999999995,
+      "status_memory": "16.6 MB",
+      "memory_percentile": 6.496100000000004,
+      "pretty_lang": "Python3",
+      "submission_id": "943510392",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  },
+  "data_validator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating a validator function `is_valid_input` that takes exactly the same inputs as the solution function and returns a boolean value indicating whether the input is valid and follows the constraints defined in the problem description. Please test your data validator by checking the validity of the example cases given in the problem description.",
+    "full_message": "To create the `is_valid_input` function, we need to validate the inputs based on the constraints defined in the problem description:\n\n- `1 <= nums.length, divisors.length <= 1000`\n- `1 <= nums[i], divisors[i] <= 10^9`\n\nThe function will receive two inputs, `nums` and `divisors`, which are both lists of integers. It will return `True` if the inputs follow the constraints, and `False` otherwise.\n\nLet's implement the `is_valid_input` function and test it with the example cases provided in the problem description.\n@@@@@CODE@BEGINS@@@@@\ndef is_valid_input(nums: List[int], divisors: List[int]) -> bool:\n    # Validate the lengths of nums and divisors.\n    if not (1 <= len(nums) <= 1000) or not (1 <= len(divisors) <= 1000):\n        return False\n    \n    # Validate the elements of nums and divisors.\n    for n in nums:\n        if not (1 <= n <= 10**9):\n            return False\n    for d in divisors:\n        if not (1 <= d <= 10**9):\n            return False\n    \n    # If all constraints are met, return True.\n    return True\n\n\n# Test the data validator with the example cases from the problem description.\nassert is_valid_input(nums=[4,7,9,3,9], divisors=[5,2,3]) == True\nassert is_valid_input(nums=[20,14,21,10], divisors=[5,7,5]) == True\nassert is_valid_input(nums=[12], divisors=[10,16]) == True\n\n# Output the results of the tests.\nprint(\"The data validator passed all example test cases.\")\n@@@@@CODE@ENDS@@@@@\nThe `is_valid_input` function successfully validated the inputs based on the constraints defined in the problem description. It passed all the example test cases, correctly determining that they are valid according to the constraints.",
+    "code": "def is_valid_input(nums: List[int], divisors: List[int]) -> bool:\n    if not 1 <= len(nums) <= 1000 or not 1 <= len(divisors) <= 1000:\n        return False\n    for n in nums:\n        if not 1 <= n <= 10 ** 9:\n            return False\n    for d in divisors:\n        if not 1 <= d <= 10 ** 9:\n            return False\n    return True\n"
+  },
+  "data_generator": {
+    "prompt": "You are given this leetcode problem and its test input validator `is_valid_input`. Please help me by generating an input generator function `gen_input` that randomly generates test inputs which follow the constraints defined. Your `gen_input` function should make use of `is_valid_input` by validating the generated input with it. Your function should only generate test inputs and not test outputs.",
+    "full_message": "To create the `gen_input` function, we will randomly generate test inputs that satisfy the constraints of the problem. We will then use the `is_valid_input` function to validate the generated inputs. The `gen_input` function will return the generated inputs `nums` and `divisors`.\n\nLet's implement the `gen_input` function as follows:\n\n1. Import the `random` module to generate random numbers.\n\n2. Randomly determine the lengths of the `nums` and `divisors` lists within the valid range (1 to 1000).\n\n3. Randomly generate the elements of the `nums` list within the valid range (1 to 10^9). Repeat this process for the `divisors` list.\n\n4. Use the `is_valid_input` function to validate the generated inputs. If the inputs are valid, return them; otherwise, repeat the process.\n\nLet's implement the `gen_input` function and test it by generating some random inputs.\n@@@@@CODE@BEGINS@@@@@\nimport random\n\ndef gen_input() -> tuple:\n    while True:\n        # Randomly determine the lengths of nums and divisors within the valid range (1 to 1000).\n        nums_length = random.randint(1, 1000)\n        divisors_length = random.randint(1, 1000)\n        \n        # Randomly generate the elements of nums and divisors within the valid range (1 to 10^9).\n        nums = [random.randint(1, 10**9) for _ in range(nums_length)]\n        divisors = [random.randint(1, 10**9) for _ in range(divisors_length)]\n        \n        # Use the is_valid_input function to validate the generated inputs.\n        if is_valid_input(nums, divisors):\n            return nums, divisors\n\n# Generate some random inputs and validate them using is_valid_input.\nfor i in range(5):\n    nums, divisors = gen_input()\n    assert is_valid_input(nums, divisors)\n    print(f\"Generated input {i + 1}:\")\n    print(f\"  nums: {nums}\")\n    print(f\"  divisors: {divisors}\")\n\nprint(\"\\nAll randomly generated inputs are valid.\")\n@@@@@CODE@ENDS@@@@@\nThe `gen_input` function successfully generated random inputs that satisfy the constraints of the problem. Additionally, the generated inputs were validated using the `is_valid_input` function, confirming that they adhere to the specified constraints. The function can be used to generate valid test inputs for the problem.",
+    "code": "def gen_input() -> tuple:\n    while True:\n        nums_length = random.randint(1, 1000)\n        divisors_length = random.randint(1, 1000)\n        nums = [random.randint(1, 10 ** 9) for _ in range(nums_length)]\n        divisors = [random.randint(1, 10 ** 9) for _ in range(divisors_length)]\n        if is_valid_input(nums, divisors):\n            return (nums, divisors)\n"
+  },
+  "data_random_generator": {
+    "prompt": "You are given this leetcode problem, its random input generator `gen_input`, and its brute-force solution `BruteforceSolution`. Please help me by generating 5 random inputs with the random input generator `gen_input`. You should return a function named `random_test()` that takes several arguments to control the upper limit of the input and returns a list of 5 tuples. You do not need to generate test outputs, only generate inputs.",
+    "full_message": "To implement the `random_test` function, we will utilize the `gen_input` function to generate random inputs while taking into consideration the upper limits for `nums` and `divisors` lengths and elements. The function will return a list of 5 tuples, where each tuple contains the `nums` and `divisors` lists as inputs.\n\nWe will modify the `gen_input` function to accept the upper limits as arguments and use them while generating random inputs.\n\nLet's implement the `random_test` function as described:\n@@@@@CODE@BEGINS@@@@@\ndef gen_input(nums_length_limit: int, divisors_length_limit: int, elements_limit: int) -> tuple:\n    while True:\n        # Randomly determine the lengths of nums and divisors within the valid range (1 to nums_length_limit).\n        nums_length = random.randint(1, min(nums_length_limit, 1000))\n        divisors_length = random.randint(1, min(divisors_length_limit, 1000))\n        \n        # Randomly generate the elements of nums and divisors within the valid range (1 to elements_limit).\n        nums = [random.randint(1, min(elements_limit, 10**9)) for _ in range(nums_length)]\n        divisors = [random.randint(1, min(elements_limit, 10**9)) for _ in range(divisors_length)]\n        \n        # Use the is_valid_input function to validate the generated inputs.\n        if is_valid_input(nums, divisors):\n            return nums, divisors\n\ndef random_test(nums_length_limit: int = 1000, divisors_length_limit: int = 1000, elements_limit: int = 10**9) -> List[tuple]:\n    # Generate 5 random inputs using the modified gen_input function.\n    random_inputs = [gen_input(nums_length_limit, divisors_length_limit, elements_limit) for _ in range(5)]\n    return random_inputs\n\n# Generate 5 random inputs using the random_test function.\ngenerated_inputs = random_test(nums_length_limit=10, divisors_length_limit=8, elements_limit=50)\nfor i, (nums, divisors) in enumerate(generated_inputs):\n    print(f\"Random Input {i + 1}:\")\n    print(f\"  nums: {nums}\")\n    print(f\"  divisors: {divisors}\")\n@@@@@CODE@ENDS@@@@@\nThe `random_test` function successfully generated 5 random inputs using the modified `gen_input` function while considering the upper limits for the lengths of `nums` and `divisors` lists, as well as the elements within them. Each generated input is a tuple containing the `nums` and `divisors` lists, and the inputs adhere to the constraints defined in the problem description.",
+    "code": "def gen_input(nums_length_limit: int, divisors_length_limit: int, elements_limit: int) -> tuple:\n    while True:\n        nums_length = random.randint(1, min(nums_length_limit, 1000))\n        divisors_length = random.randint(1, min(divisors_length_limit, 1000))\n        nums = [random.randint(1, min(elements_limit, 10 ** 9)) for _ in range(nums_length)]\n        divisors = [random.randint(1, min(elements_limit, 10 ** 9)) for _ in range(divisors_length)]\n        if is_valid_input(nums, divisors):\n            return (nums, divisors)\ndef random_test(nums_length_limit: int=1000, divisors_length_limit: int=1000, elements_limit: int=10 ** 9) -> List[tuple]:\n    random_inputs = [gen_input(nums_length_limit, divisors_length_limit, elements_limit) for _ in range(5)]\n    return random_inputs\n"
+  },
+  "data_tricky_generator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating some special and tricky test inputs by the function `special_tricky_test_inputs()` that may break the user's program. Make sure that your test inputs follow the constraints defined in the problem. Do not generate test outputs, only generate inputs.",
+    "full_message": "To create special and tricky test inputs that may challenge a user's program, we can consider the following scenarios:\n\n1. Case with the smallest possible values for `nums` and `divisors` (minimum values).\n2. Case with `nums` containing only one unique value and `divisors` having various divisors of that value (checking divisibility by the same number).\n3. Case with both `nums` and `divisors` containing only prime numbers (checking divisibility by prime numbers).\n4. Case where `nums` and `divisors` both contain values that have a common divisor greater than 1 (checking divisibility by common factors).\n5. Case with the largest possible values for `nums` and `divisors` (maximum values).\n\nLet's implement the `special_tricky_test_inputs` function to generate these special and tricky test inputs:\n@@@@@CODE@BEGINS@@@@@\ndef special_tricky_test_inputs() -> List[tuple]:\n    # List to store the special and tricky test inputs.\n    tricky_inputs = []\n    \n    # 1. Case with the smallest possible values for nums and divisors.\n    tricky_inputs.append(([1], [1]))\n    \n    # 2. Case with nums containing only one unique value and divisors having various divisors of that value.\n    tricky_inputs.append(([36] * 5, [1, 2, 3, 4, 6, 9, 12, 18]))\n    \n    # 3. Case with both nums and divisors containing only prime numbers.\n    tricky_inputs.append(([2, 3, 5, 7, 11, 13], [2, 3, 5, 7]))\n    \n    # 4. Case where nums and divisors both contain values that have a common divisor greater than 1.\n    tricky_inputs.append(([20, 40, 60, 80], [4, 5, 10, 20]))\n    \n    # 5. Case with the largest possible values for nums and divisors.\n    max_value = 10**9\n    tricky_inputs.append(([max_value, max_value - 1, max_value - 2], [max_value - 3, max_value - 4, max_value - 5]))\n    \n    return tricky_inputs\n\n# Generate the special and tricky test inputs.\nspecial_inputs = special_tricky_test_inputs()\nfor i, (nums, divisors) in enumerate(special_inputs):\n    print(f\"Special Input {i + 1}:\")\n    print(f\"  nums: {nums}\")\n    print(f\"  divisors: {divisors}\")\n@@@@@CODE@ENDS@@@@@\nThe `special_tricky_test_inputs` function has successfully generated five special and tricky test inputs based on different scenarios. Each test input is a tuple containing the `nums` and `divisors` lists. These inputs cover edge cases and scenarios that may challenge the correctness of a user's program, making them useful for testing the robustness of the solution. All the generated inputs adhere to the constraints defined in the problem description.",
+    "code": "def special_tricky_test_inputs() -> List[tuple]:\n    tricky_inputs = []\n    tricky_inputs.append(([1], [1]))\n    tricky_inputs.append(([36] * 5, [1, 2, 3, 4, 6, 9, 12, 18]))\n    tricky_inputs.append(([2, 3, 5, 7, 11, 13], [2, 3, 5, 7]))\n    tricky_inputs.append(([20, 40, 60, 80], [4, 5, 10, 20]))\n    max_value = 10 ** 9\n    tricky_inputs.append(([max_value, max_value - 1, max_value - 2], [max_value - 3, max_value - 4, max_value - 5]))\n    return tricky_inputs\n"
+  },
+  "code_baseline": {
+    "message": "\n@@@@@CODE@BEGINS@@@@@\nfrom typing import List\n\nclass Solution:\n    def maxDivScore(self, nums: List[int], divisors: List[int]) -> int:\n        # Initialize a dictionary to store the divisibility score of each divisor\n        div_score = {}\n        # Iterate through the divisors\n        for d in divisors:\n            # Initialize the divisibility score for the current divisor to 0\n            div_score[d] = 0\n            # Iterate through the numbers in nums\n            for n in nums:\n                # Check if the number is divisible by the current divisor\n                if n % d == 0:\n                    # Increment the divisibility score for the current divisor\n                    div_score[d] += 1\n        # Find the maximum divisibility score\n        max_score = max(div_score.values())\n        # Find the divisors with the maximum divisibility score\n        max_divisors = [d for d, score in div_score.items() if score == max_score]\n        # Return the minimum divisor with the maximum divisibility score\n        return min(max_divisors)\n\n# Test cases\nsol = Solution()\nprint(sol.maxDivScore([4,7,9,3,9], [5,2,3])) # Output: 3\nprint(sol.maxDivScore([20,14,21,10], [5,7,5])) # Output: 5\nprint(sol.maxDivScore([12], [10,16])) # Output: 10\n@@@@@CODE@ENDS@@@@@\nThe implementation of the `maxDivScore` function is correct and produces the expected output for the given test cases. The function calculates the divisibility score for each divisor by iterating through the numbers in `nums` and checking if they are divisible by the current divisor. It then finds the maximum divisibility score, identifies the divisors with the maximum divisibility score, and returns the minimum of these divisors. The test cases show that the function correctly handles cases with different numbers of elements in `nums` and `divisors`, as well as cases where there are multiple divisors with the same maximum divisibility score.",
+    "code": "class Solution:\n\n    def maxDivScore(self, nums: List[int], divisors: List[int]) -> int:\n        div_score = {}\n        for d in divisors:\n            div_score[d] = 0\n            for n in nums:\n                if n % d == 0:\n                    div_score[d] += 1\n        max_score = max(div_score.values())\n        max_divisors = [d for (d, score) in div_score.items() if score == max_score]\n        return min(max_divisors)",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "4518 ms",
+      "memory": 16708000,
+      "question_id": "2694",
+      "elapsed_time": 4559,
+      "compare_result": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1682898107094,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 155,
+      "total_testcases": 155,
+      "runtime_percentile": 37.11010000000026,
+      "status_memory": "16.7 MB",
+      "memory_percentile": 5.325999999999997,
+      "pretty_lang": "Python3",
+      "submission_id": "942326386",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  }
+}

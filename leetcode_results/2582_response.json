@@ -1,0 +1,97 @@
+{
+  "problem": 2582,
+  "link_id": "pass-the-pillow",
+  "contest": "weekly-contest-335",
+  "level": "easy",
+  "tags": [
+    "Math",
+    "Simulation"
+  ],
+  "hint1": "Every 2 * (n - 1) passes is a cycle.",
+  "hint2": "Every 2 * (n - 1) is a cycle, so we first modulo time with 2 * (n - 1), i.e., time = time % 2 * (n - 1). Then if time <= n - 1, the pillow is given to time + 1 person. Otherwise, the pillow is given to n - (time - (n - 1)) person.",
+  "func_name": "passThePillow",
+  "sample_inputs": [
+    "4\n5",
+    "3\n2"
+  ],
+  "code_brute_force": {
+    "id": 2582,
+    "code": "class Solution:\n\n    def passThePillow(self, n: int, time: int) -> int:\n        current_index = 1\n        direction = 1\n        second = 0\n        while second < time:\n            current_index += direction\n            if current_index > n:\n                current_index = n - 1\n                direction = -1\n            elif current_index < 1:\n                current_index = 2\n                direction = 1\n            second += 1\n        return current_index\n",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "50 ms",
+      "memory": 16204000,
+      "question_id": "2645",
+      "elapsed_time": 66,
+      "compare_result": "11111111111111111111111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1683070996547,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 68,
+      "total_testcases": 68,
+      "runtime_percentile": 5.665700000000002,
+      "status_memory": "16.2 MB",
+      "memory_percentile": 8.19769999999999,
+      "pretty_lang": "Python3",
+      "submission_id": "943507798",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  },
+  "data_validator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating a validator function `is_valid_input` that takes exactly the same inputs as the solution function and returns a boolean value indicating whether the input is valid and follows the constraints defined in the problem description. Please test your data validator by checking the validity of the example cases given in the problem description.",
+    "full_message": "To create the validator function `is_valid_input`, we need to check the following constraints for the input parameters based on the problem description:\n\n1. `2 <= n <= 1000`: The number of people `n` must be an integer within the range [2, 1000].\n2. `1 <= time <= 1000`: The time duration `time` must be an integer within the range [1, 1000].\n\nThe function will take two parameters: `n` and `time`, and return `True` if both parameters satisfy the constraints, and `False` otherwise.\n\nI'll go ahead and implement the `is_valid_input` function and test it with the example cases.\n@@@@@CODE@BEGINS@@@@@\ndef is_valid_input(n: int, time: int) -> bool:\n    # Check if 'n' and 'time' satisfy the constraints\n    return (2 <= n <= 1000) and (1 <= time <= 1000)\n\n# Test the validator function with the example cases\nprint(is_valid_input(4, 5))  # Expected output: True (Valid input)\nprint(is_valid_input(3, 2))  # Expected output: True (Valid input)\n\n# Test the validator function with additional cases\nprint(is_valid_input(1, 5))  # Expected output: False (Invalid 'n' value)\nprint(is_valid_input(4, 0))  # Expected output: False (Invalid 'time' value)\nprint(is_valid_input(1001, 1000))  # Expected output: False (Invalid 'n' value)\nprint(is_valid_input(4, 1001))  # Expected output: False (Invalid 'time' value)\n@@@@@CODE@ENDS@@@@@\nThe validator function `is_valid_input` is working as expected. It checks whether the input parameters `n` and `time` satisfy the constraints specified in the problem description and returns `True` or `False` accordingly.\n\nThe function returns `True` for the valid example cases `(4, 5)` and `(3, 2)`, indicating that the inputs satisfy the constraints. It also returns `False` for additional test cases with invalid values of `n` and `time`, indicating that the inputs do not satisfy the constraints.\n\nOverall, the validator function is correctly validating the input according to the constraints defined in the problem description.",
+    "code": "def is_valid_input(n: int, time: int) -> bool:\n    return 2 <= n <= 1000 and 1 <= time <= 1000\n"
+  },
+  "data_generator": {
+    "prompt": "You are given this leetcode problem and its test input validator `is_valid_input`. Please help me by generating an input generator function `gen_input` that randomly generates test inputs which follow the constraints defined. Your `gen_input` function should make use of `is_valid_input` by validating the generated input with it. Your function should only generate test inputs and not test outputs.",
+    "full_message": "To create the input generator function `gen_input`, we can use the `random` module to randomly generate values for the input parameters `n` and `time` within the constraints defined in the problem description. We will then validate the generated input using the `is_valid_input` function to ensure that it follows the constraints.\n\nThe `gen_input` function will return a tuple `(n, time)` containing the randomly generated input values.\n\nLet's go ahead and implement the `gen_input` function:\n@@@@@CODE@BEGINS@@@@@\nimport random\n\ndef gen_input() -> tuple:\n    while True:\n        # Randomly generate values for 'n' and 'time' within the specified range\n        n = random.randint(2, 1000)\n        time = random.randint(1, 1000)\n        \n        # Validate the generated input using 'is_valid_input' function\n        if is_valid_input(n, time):\n            # Return the valid input as a tuple\n            return (n, time)\n\n# Generate and print some random test inputs using 'gen_input' function\nfor i in range(5):\n    test_input = gen_input()\n    print(test_input)  # Output: Randomly generated and validated test inputs\n@@@@@CODE@ENDS@@@@@\nThe input generator function `gen_input` is working as expected. It randomly generates values for the input parameters `n` and `time` within the specified range and validates them using the `is_valid_input` function. The function returns a tuple `(n, time)` containing the randomly generated and validated input values.\n\nThe printed output shows five randomly generated test inputs that follow the constraints defined in the problem description. The `gen_input` function can be used to generate additional test inputs for testing the solution function.",
+    "code": "def gen_input() -> tuple:\n    while True:\n        n = random.randint(2, 1000)\n        time = random.randint(1, 1000)\n        if is_valid_input(n, time):\n            return (n, time)\n"
+  },
+  "data_random_generator": {
+    "prompt": "You are given this leetcode problem, its random input generator `gen_input`, and its brute-force solution `BruteforceSolution`. Please help me by generating 5 random inputs with the random input generator `gen_input`. You should return a function named `random_test()` that takes several arguments to control the upper limit of the input and returns a list of 5 tuples. You do not need to generate test outputs, only generate inputs.",
+    "full_message": "To implement the `random_test` function, we will modify the existing `gen_input` function to allow for specifying the upper limits for `n` and `time`. The modified function, which we'll call `gen_input_with_limits`, will take two arguments `n_limit` and `time_limit` that specify the upper limits for generating the random values of `n` and `time`. It will then return a tuple `(n, time)` containing the randomly generated input values within the specified limits.\n\nThe `random_test` function will take the arguments `n_limit` and `time_limit` as input and use the `gen_input_with_limits` function to generate 5 random test inputs. It will return a list of 5 tuples, each representing a random test input.\n\nLet's go ahead and implement the `random_test` function:\n@@@@@CODE@BEGINS@@@@@\ndef gen_input_with_limits(n_limit: int, time_limit: int) -> tuple:\n    while True:\n        # Randomly generate values for 'n' and 'time' within the specified limits\n        n = random.randint(2, min(n_limit, 1000))\n        time = random.randint(1, min(time_limit, 1000))\n        \n        # Validate the generated input using 'is_valid_input' function\n        if is_valid_input(n, time):\n            # Return the valid input as a tuple\n            return (n, time)\n\ndef random_test(n_limit: int, time_limit: int) -> list:\n    # Initialize an empty list to store the random test inputs\n    test_inputs = []\n    \n    # Generate 5 random test inputs using 'gen_input_with_limits' function\n    for i in range(5):\n        test_input = gen_input_with_limits(n_limit, time_limit)\n        test_inputs.append(test_input)\n    \n    # Return the list of random test inputs\n    return test_inputs\n\n# Generate and print random test inputs using 'random_test' function\nprint(random_test(10, 20))  # Output: List of 5 random test inputs with limits (10, 20)\n@@@@@CODE@ENDS@@@@@\nThe `random_test` function is working as expected. It takes two arguments `n_limit` and `time_limit` as input and generates 5 random test inputs using the `gen_input_with_limits` function. The function returns a list of 5 tuples, each representing a random test input within the specified limits.\n\nThe printed output shows a list of 5 random test inputs with limits `(10, 20)`, indicating that the generated values for `n` are within the range [2, 10] and the generated values for `time` are within the range [1, 20].\n\nThe `random_test` function can be used to generate random test inputs with different upper limits for testing the solution function.",
+    "code": "def gen_input_with_limits(n_limit: int, time_limit: int) -> tuple:\n    while True:\n        n = random.randint(2, min(n_limit, 1000))\n        time = random.randint(1, min(time_limit, 1000))\n        if is_valid_input(n, time):\n            return (n, time)\ndef random_test(n_limit: int, time_limit: int) -> list:\n    test_inputs = []\n    for i in range(5):\n        test_input = gen_input_with_limits(n_limit, time_limit)\n        test_inputs.append(test_input)\n    return test_inputs\n"
+  },
+  "data_tricky_generator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating some special and tricky test inputs by the function `special_tricky_test_inputs()` that may break the user's program. Make sure that your test inputs follow the constraints defined in the problem. Do not generate test outputs, only generate inputs.",
+    "full_message": "To generate special and tricky test inputs that may break the user's program, we can focus on certain edge cases and scenarios that could challenge the implementation. These edge cases include the smallest and largest possible values for `n` and `time`, as well as cases where the direction of the pillow changes multiple times. Here are some special and tricky test inputs:\n\n1. The smallest possible values for `n` and `time` (`n=2`, `time=1`).\n2. The largest possible values for `n` and `time` (`n=1000`, `time=1000`).\n3. A case where `n` is even and `time` equals `n`, causing the direction of the pillow to change twice (`n=4`, `time=4`).\n4. A case where `n` is odd and `time` equals `n`, causing the direction of the pillow to change once (`n=5`, `time=5`).\n5. A case where `n` is small but `time` is large, causing the direction of the pillow to change multiple times (`n=3`, `time=1000`).\n\nLet's go ahead and implement the `special_tricky_test_inputs` function to generate these test inputs:\n@@@@@CODE@BEGINS@@@@@\ndef special_tricky_test_inputs() -> list:\n    # Define a list of special and tricky test inputs\n    test_inputs = [\n        (2, 1),  # Smallest possible values for 'n' and 'time'\n        (1000, 1000),  # Largest possible values for 'n' and 'time'\n        (4, 4),  # Even 'n' and 'time' equals 'n' (direction changes twice)\n        (5, 5),  # Odd 'n' and 'time' equals 'n' (direction changes once)\n        (3, 1000)  # Small 'n' but large 'time' (direction changes multiple times)\n    ]\n    \n    # Return the list of special and tricky test inputs\n    return test_inputs\n\n# Generate and print special and tricky test inputs\nprint(special_tricky_test_inputs())  # Output: List of special and tricky test inputs\n@@@@@CODE@ENDS@@@@@\nThe `special_tricky_test_inputs` function generates a list of special and tricky test inputs that may challenge the user's program. These test inputs include edge cases with the smallest and largest possible values for `n` and `time`, as well as cases where the direction of the pillow changes multiple times.\n\nThe printed output shows the list of special and tricky test inputs:\n- `(2, 1)`: The smallest possible values for `n` and `time`.\n- `(1000, 1000)`: The largest possible values for `n` and `time`.\n- `(4, 4)`: A case where `n` is even and `time` equals `n`, causing the direction of the pillow to change twice.\n- `(5, 5)`: A case where `n` is odd and `time` equals `n`, causing the direction of the pillow to change once.\n- `(3, 1000)`: A case where `n` is small but `time` is large, causing the direction of the pillow to change multiple times.\n\nThese test inputs follow the constraints defined in the problem and can be used to evaluate the correctness and robustness of the user's program.",
+    "code": "def special_tricky_test_inputs() -> list:\n    test_inputs = [(2, 1), (1000, 1000), (4, 4), (5, 5), (3, 1000)]\n    return test_inputs\n"
+  },
+  "code_baseline": {
+    "message": "\n@@@@@CODE@BEGINS@@@@@\nclass Solution:\n    def passThePillow(self, n: int, time: int) -> int:\n        # We can think of this problem as a simulation of people passing the pillow.\n        # The direction is initially set to 1 (forward), and the initial position of the pillow is 1.\n        direction = 1\n        position = 1\n        \n        # We simulate the passing of the pillow for the given number of seconds (time)\n        for t in range(time):\n            # The next position is calculated based on the current direction\n            next_position = position + direction\n            \n            # If the next position exceeds the number of people or is less than 1,\n            # we reverse the direction and update the next position accordingly.\n            if next_position > n or next_position < 1:\n                direction = -direction\n                next_position = position + direction\n            \n            # The position is updated to the next position.\n            position = next_position\n        \n        # The final position is the person holding the pillow after the given number of seconds.\n        return position\n\n# Let's test the solution with the provided test cases\nsolution = Solution()\nprint(solution.passThePillow(4, 5))  # Output: 2\nprint(solution.passThePillow(3, 2))  # Output: 3\n@@@@@CODE@ENDS@@@@@\nThe implemented solution correctly returns the index of the person holding the pillow after the given number of seconds for the provided test cases. The output for the first test case (`n = 4, time = 5`) is `2`, and the output for the second test case (`n = 3, time = 2`) is `3`, which matches the expected results as described in the problem statement.",
+    "code": "class Solution:\n\n    def passThePillow(self, n: int, time: int) -> int:\n        direction = 1\n        position = 1\n        for t in range(time):\n            next_position = position + direction\n            if next_position > n or next_position < 1:\n                direction = -direction\n                next_position = position + direction\n            position = next_position\n        return position",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "41 ms",
+      "memory": 16212000,
+      "question_id": "2645",
+      "elapsed_time": 62,
+      "compare_result": "11111111111111111111111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1682898581625,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 68,
+      "total_testcases": 68,
+      "runtime_percentile": 5.212199999999983,
+      "status_memory": "16.2 MB",
+      "memory_percentile": 7.697000000000003,
+      "pretty_lang": "Python3",
+      "submission_id": "942328056",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  }
+}

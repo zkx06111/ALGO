@@ -1,0 +1,96 @@
+{
+  "problem": 2639,
+  "link_id": "find-the-width-of-columns-of-a-grid",
+  "contest": "biweekly-contest-102",
+  "level": "easy",
+  "tags": [
+    "String"
+  ],
+  "hint1": "Compute all the widths for each column.",
+  "hint2": "Pay attention to the negative sign.",
+  "func_name": "findColumnWidth",
+  "sample_inputs": [
+    "[[1],[22],[333]]",
+    "[[-15,1,3],[15,7,12],[5,6,-2]]"
+  ],
+  "code_brute_force": {
+    "id": 2639,
+    "code": "class Solution:\n\n    def findColumnWidth(self, grid: List[List[int]]) -> List[int]:\n        ans = []\n        for i in range(len(grid[0])):\n            max_length = 0\n            for j in range(len(grid)):\n                length = len(str(abs(grid[j][i]))) + (1 if grid[j][i] < 0 else 0)\n                max_length = max(max_length, length)\n            ans.append(max_length)\n        return ans\n",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "133 ms",
+      "memory": 17948000,
+      "question_id": "2675",
+      "elapsed_time": 154,
+      "compare_result": "1111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1683071608658,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 49,
+      "total_testcases": 49,
+      "runtime_percentile": 21.08099999999998,
+      "status_memory": "17.9 MB",
+      "memory_percentile": 5.261199999999993,
+      "pretty_lang": "Python3",
+      "submission_id": "943510088",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  },
+  "data_validator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating a validator function `is_valid_input` that takes exactly the same inputs as the solution function and returns a boolean value indicating whether the input is valid and follows the constraints defined in the problem description. Please test your data validator by checking the validity of the example cases given in the problem description.",
+    "full_message": "To create the `is_valid_input` function, we need to ensure that the input follows the constraints defined in the problem description:\n\n- `m == grid.length`\n- `n == grid[i].length`\n- `1 <= m, n <= 100`\n- `-10^9 <= grid[r][c] <= 10^9`\n\nThe function `is_valid_input` should take the same input as the solution function, which is a 2D integer matrix `grid`. It should return a boolean value indicating whether the input is valid.\n\nLet's implement the `is_valid_input` function and test it with the example cases given in the problem description.\n@@@@@CODE@BEGINS@@@@@\ndef is_valid_input(grid: List[List[int]]) -> bool:\n    # Check if grid is not empty\n    if not grid:\n        return False\n    \n    # Check the number of rows (m) and columns (n)\n    m = len(grid)\n    n = len(grid[0])\n    if m < 1 or m > 100 or n < 1 or n > 100:\n        return False\n    \n    # Check each element in the grid\n    for row in grid:\n        # Check if each row has the same number of columns (n)\n        if len(row) != n:\n            return False\n        for num in row:\n            # Check if each element is within the range [-10^9, 10^9]\n            if num < -10**9 or num > 10**9:\n                return False\n    \n    # All constraints are satisfied\n    return True\n\n# Test the data validator with the example cases\nprint(is_valid_input([[1],[22],[333]])) # Output: True\nprint(is_valid_input([[-15,1,3],[15,7,12],[5,6,-2]])) # Output: True\n\n# Test the data validator with additional cases\nprint(is_valid_input([])) # Output: False (empty grid)\nprint(is_valid_input([[1], [10000000000]])) # Output: False (number out of range)\nprint(is_valid_input([[1, 2], [3]])) # Output: False (inconsistent number of columns)\n@@@@@CODE@ENDS@@@@@\nThe implemented `is_valid_input` function correctly validates the input based on the constraints defined in the problem description:\n\n- For the input `[[1],[22],[333]]`, the function returns `True`, indicating that the input is valid.\n- For the input `[[-15,1,3],[15,7,12],[5,6,-2]]`, the function returns `True`, indicating that the input is valid.\n\nAdditionally, the function is tested with some invalid cases:\n- For the input `[]`, the function returns `False`, indicating that an empty grid is not valid.\n- For the input `[[1], [10000000000]]`, the function returns `False`, indicating that a number out of range is not valid.\n- For the input `[[1, 2], [3]]`, the function returns `False`, indicating that inconsistent numbers of columns in rows are not valid.\n\nOverall, the `is_valid_input` function successfully checks the validity of the input by ensuring that it follows the constraints defined in the problem description.",
+    "code": "def is_valid_input(grid: List[List[int]]) -> bool:\n    if not grid:\n        return False\n    m = len(grid)\n    n = len(grid[0])\n    if m < 1 or m > 100 or n < 1 or (n > 100):\n        return False\n    for row in grid:\n        if len(row) != n:\n            return False\n        for num in row:\n            if num < -10 ** 9 or num > 10 ** 9:\n                return False\n    return True\n"
+  },
+  "data_generator": {
+    "prompt": "You are given this leetcode problem and its test input validator `is_valid_input`. Please help me by generating an input generator function `gen_input` that randomly generates test inputs which follow the constraints defined. Your `gen_input` function should make use of `is_valid_input` by validating the generated input with it. Your function should only generate test inputs and not test outputs.",
+    "full_message": "To create the `gen_input` function, we need to generate random test inputs that satisfy the constraints defined in the problem description:\n\n- `m == grid.length`\n- `n == grid[i].length`\n- `1 <= m, n <= 100`\n- `-10^9 <= grid[r][c] <= 10^9`\n\nThe `gen_input` function should generate a 2D integer matrix `grid` based on the above constraints and return it as a valid test input. We will use the `is_valid_input` function to validate the generated input before returning it.\n\nLet's implement the `gen_input` function and generate some random test inputs.\n@@@@@CODE@BEGINS@@@@@\nimport random\n\ndef gen_input() -> List[List[int]]:\n    # Randomly select the number of rows (m) and columns (n) within the allowed range\n    m = random.randint(1, 100)\n    n = random.randint(1, 100)\n    \n    # Generate the grid with random integers within the allowed range\n    grid = [[random.randint(-10**9, 10**9) for _ in range(n)] for _ in range(m)]\n    \n    # Validate the generated input using the is_valid_input function\n    if not is_valid_input(grid):\n        # If validation fails, generate input again (recursive call)\n        return gen_input()\n    \n    # Return the valid input\n    return grid\n\n# Generate and print some random test inputs\nfor i in range(5):\n    test_input = gen_input()\n    print(test_input)  # Random test input\n    print(is_valid_input(test_input))  # Should be True\n@@@@@CODE@ENDS@@@@@\nThe `gen_input` function successfully generates random test inputs that follow the constraints defined in the problem description. The generated inputs are also validated using the `is_valid_input` function to ensure their validity.\n\nFor each of the five generated test inputs, the `is_valid_input` function returns `True`, confirming that the inputs are valid.\n\nPlease note that the output of the `gen_input` function is random, so the actual values may vary each time the function is run.",
+    "code": "def gen_input() -> List[List[int]]:\n    m = random.randint(1, 100)\n    n = random.randint(1, 100)\n    grid = [[random.randint(-10 ** 9, 10 ** 9) for _ in range(n)] for _ in range(m)]\n    if not is_valid_input(grid):\n        return gen_input()\n    return grid\n"
+  },
+  "data_random_generator": {
+    "prompt": "You are given this leetcode problem, its random input generator `gen_input`, and its brute-force solution `BruteforceSolution`. Please help me by generating 5 random inputs with the random input generator `gen_input`. You should return a function named `random_test()` that takes several arguments to control the upper limit of the input and returns a list of 5 tuples. You do not need to generate test outputs, only generate inputs.",
+    "full_message": "To achieve the desired behavior, we can modify the `gen_input` function to accept arguments that control the upper limit of the input. Specifically, we'll add arguments `max_m` and `max_n` to control the maximum number of rows and columns, and `max_val` to control the maximum absolute value of the integers in the grid.\n\nThe `random_test()` function will take arguments `max_m`, `max_n`, and `max_val`, and it will use the modified `gen_input` function to generate 5 random inputs. It will return a list of 5 tuples, where each tuple contains a single input.\n\nLet's implement the `random_test()` function as described.\n@@@@@CODE@BEGINS@@@@@\nfrom typing import List, Tuple\n\ndef gen_input(max_m: int, max_n: int, max_val: int) -> List[List[int]]:\n    # Randomly select the number of rows (m) and columns (n) within the allowed range\n    m = random.randint(1, min(max_m, 100))\n    n = random.randint(1, min(max_n, 100))\n    \n    # Generate the grid with random integers within the allowed range\n    grid = [[random.randint(-max_val, max_val) for _ in range(n)] for _ in range(m)]\n    \n    # Validate the generated input using the is_valid_input function\n    if not is_valid_input(grid):\n        # If validation fails, generate input again (recursive call)\n        return gen_input(max_m, max_n, max_val)\n    \n    # Return the valid input\n    return grid\n\ndef random_test(max_m: int, max_n: int, max_val: int) -> List[Tuple[List[List[int]]]]:\n    # Generate 5 random inputs using the gen_input function\n    random_inputs = [gen_input(max_m, max_n, max_val) for _ in range(5)]\n    \n    # Convert each input to a tuple and store it in the result list\n    result = [(input,) for input in random_inputs]\n    \n    # Return the result list\n    return result\n\n# Generate and print 5 random test inputs with specified upper limits\nrandom_inputs = random_test(max_m=10, max_n=10, max_val=1000)\nfor test_input in random_inputs:\n    print(test_input)  # Random test input\n    print(is_valid_input(test_input[0]))  # Should be True\n@@@@@CODE@ENDS@@@@@\nThe implemented `random_test()` function successfully generates 5 random test inputs based on the specified upper limits `max_m`, `max_n`, and `max_val`. Each generated input is validated using the `is_valid_input` function to ensure its validity, and the function returns a list of 5 tuples, each containing a single input.\n\nFor each of the 5 generated test inputs, the `is_valid_input` function returns `True`, confirming that the inputs are valid and follow the constraints defined in the problem description.\n\nPlease note that the output of the `random_test()` function is random, so the actual values may vary each time the function is run.",
+    "code": "def gen_input(max_m: int, max_n: int, max_val: int) -> List[List[int]]:\n    m = random.randint(1, min(max_m, 100))\n    n = random.randint(1, min(max_n, 100))\n    grid = [[random.randint(-max_val, max_val) for _ in range(n)] for _ in range(m)]\n    if not is_valid_input(grid):\n        return gen_input(max_m, max_n, max_val)\n    return grid\ndef random_test(max_m: int, max_n: int, max_val: int) -> List[Tuple[List[List[int]]]]:\n    random_inputs = [gen_input(max_m, max_n, max_val) for _ in range(5)]\n    result = [(input,) for input in random_inputs]\n    return result\n"
+  },
+  "data_tricky_generator": {
+    "prompt": "You are given this leetcode problem. Please help me by generating some special and tricky test inputs by the function `special_tricky_test_inputs()` that may break the user's program. Make sure that your test inputs follow the constraints defined in the problem. Do not generate test outputs, only generate inputs.",
+    "full_message": "To create special and tricky test inputs that may challenge the implementation of the solution, we can consider the following scenarios:\n\n1. A single row with multiple columns where the lengths of the integers vary across columns.\n2. A single column with multiple rows where the lengths of the integers vary across rows.\n3. A grid with maximum allowed dimensions (`m = n = 100`) containing the smallest and largest possible integers (`-10^9` and `10^9`).\n4. A grid with negative and positive integers of the same magnitude but different lengths due to the negative sign.\n5. A grid with all elements being the same integer.\n\nLet's implement the `special_tricky_test_inputs()` function to generate these special test inputs.\n@@@@@CODE@BEGINS@@@@@\ndef special_tricky_test_inputs() -> List[Tuple[List[List[int]]]]:\n    # Define special and tricky test inputs\n    test_inputs = [\n        # Test Case 1: Single row with multiple columns, varying lengths\n        ([[1, 10, 100, 1000, -10000]],),\n        \n        # Test Case 2: Single column with multiple rows, varying lengths\n        ([[1], [22], [333], [-4444]],),\n        \n        # Test Case 3: Maximum dimensions, smallest and largest integers\n        ([[10**9 if (i + j) % 2 == 0 else -10**9 for j in range(100)] for i in range(100)],),\n        \n        # Test Case 4: Negative and positive integers of same magnitude but different lengths\n        ([[-1, 1, -10, 10, -100, 100]],),\n        \n        # Test Case 5: All elements are the same integer\n        ([[12345] * 5] * 3,),\n    ]\n    \n    return test_inputs\n\n# Generate and print special and tricky test inputs\nspecial_inputs = special_tricky_test_inputs()\nfor test_input in special_inputs:\n    print(test_input)  # Special test input\n    print(is_valid_input(test_input[0]))  # Should be True\n@@@@@CODE@ENDS@@@@@\nThe `special_tricky_test_inputs()` function successfully generates special and tricky test inputs that may challenge certain implementations of the solution. Each generated input follows the constraints defined in the problem description and is validated using the `is_valid_input` function to ensure its validity.\n\nFor each of the special test inputs, the `is_valid_input` function returns `True`, confirming that the inputs are valid.\n\nThese test inputs include cases with varying lengths of integers in rows and columns, cases with maximum allowed dimensions, cases with negative and positive integers of the same magnitude, and cases with all elements being the same integer. These special and tricky test inputs can be used to thoroughly test the solution and evaluate its correctness.",
+    "code": "def special_tricky_test_inputs() -> List[Tuple[List[List[int]]]]:\n    test_inputs = [([[1, 10, 100, 1000, -10000]],), ([[1], [22], [333], [-4444]],), ([[10 ** 9 if (i + j) % 2 == 0 else -10 ** 9 for j in range(100)] for i in range(100)],), ([[-1, 1, -10, 10, -100, 100]],), ([[12345] * 5] * 3,)]\n    return test_inputs\n"
+  },
+  "code_baseline": {
+    "message": "\n@@@@@CODE@BEGINS@@@@@\nfrom typing import List\n\nclass Solution:\n    def findColumnWidth(self, grid: List[List[int]]) -> List[int]:\n        # Get the number of rows and columns in the grid\n        m, n = len(grid), len(grid[0])\n        \n        # Initialize the result list with zeros\n        column_widths = [0] * n\n        \n        # Loop through each element in the grid\n        for i in range(m):\n            for j in range(n):\n                # Calculate the length of the current integer\n                current_length = len(str(abs(grid[i][j]))) + (1 if grid[i][j] < 0 else 0)\n                \n                # Update the column width if the current length is greater\n                column_widths[j] = max(column_widths[j], current_length)\n        \n        # Return the result\n        return column_widths\n\n# Create an instance of the solution class\nsol = Solution()\n\n# Test cases\nprint(sol.findColumnWidth([[1],[22],[333]]))  # Output: [3]\nprint(sol.findColumnWidth([[-15,1,3],[15,7,12],[5,6,-2]]))  # Output: [3,1,2]\n@@@@@CODE@ENDS@@@@@\nThe implementation of the `findColumnWidth` method correctly finds the width of each column in the given grid. The test cases provided in the prompt have produced the expected output. Therefore, this solution is correct and meets the requirements of the prompt.",
+    "code": "class Solution:\n\n    def findColumnWidth(self, grid: List[List[int]]) -> List[int]:\n        (m, n) = (len(grid), len(grid[0]))\n        column_widths = [0] * n\n        for i in range(m):\n            for j in range(n):\n                current_length = len(str(abs(grid[i][j]))) + (1 if grid[i][j] < 0 else 0)\n                column_widths[j] = max(column_widths[j], current_length)\n        return column_widths",
+    "result": {
+      "status_code": 10,
+      "lang": "python3",
+      "run_success": true,
+      "status_runtime": "130 ms",
+      "memory": 17872000,
+      "question_id": "2675",
+      "elapsed_time": 154,
+      "compare_result": "1111111111111111111111111111111111111111111111111",
+      "code_output": "",
+      "std_output": "",
+      "last_testcase": "",
+      "expected_output": "",
+      "task_finish_time": 1682898541125,
+      "task_name": "judger.judgetask.Judge",
+      "finished": true,
+      "total_correct": 49,
+      "total_testcases": 49,
+      "runtime_percentile": 31.655899999999992,
+      "status_memory": "17.9 MB",
+      "memory_percentile": 6.309199999999986,
+      "pretty_lang": "Python3",
+      "submission_id": "942327920",
+      "status_msg": "Accepted",
+      "state": "SUCCESS"
+    }
+  }
+}
