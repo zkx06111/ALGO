@@ -2,6 +2,8 @@
 
 The official repo for the arxiv preprint *ALGO: Synthesizing Algorithmic Programs with Generated Oracle Verifiers*.
 
+![](figs/main_arch.jpg)
+
 ## Infrastructure
 
 We built upon the following open-source projects to automatically prompt ChatGPT code interpreter, collect problem statements from LeetCode and Codeforces, and to submit solutions to LC and CF.
