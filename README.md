@@ -1,6 +1,6 @@
 # ALGO
 
-The official repo for the arxiv preprint *ALGO: Synthesizing Algorithmic Programs with Generated Oracle Verifiers*.
+The official repo for the arxiv preprint [*ALGO: Synthesizing Algorithmic Programs with Generated Oracle Verifiers*](https://arxiv.org/abs/2305.14591).
 
 ![](figs/main_arch.jpg)
 
